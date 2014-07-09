@@ -1,0 +1,3 @@
+fieldUserName:anna
+fieldLastLevel:0
+fieldWordsSeen:[]

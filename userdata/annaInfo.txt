@@ -1,3 +1,5 @@
 fieldUserName:anna
 fieldLastLevel:0
-fieldWordsSeen:[]
+fieldWordsSeen:['"alligator"','"goat"']
+fieldDatesSeen:[]
+fieldRanksSeen:[]

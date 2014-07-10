@@ -9,15 +9,17 @@
     <meta name="vimport" content="width-device-width, initial-scale-1.0">
  </head>
  <body>
-	<header>
-		<a href="index.php" id="logo">
-			<h1>Spelling List</h1>
-		 </a>
-		 <nav>
-			<ul>
-			  <li><a href="index.php" <?php if ($section == "home") { echo "class='selected'"; } ?>>Home</a></li>
-			  <li><a href="about.php" <?php if ($section == "about") { echo "class='selected'"; } ?>>About</a></li>  
-			  <li><a href="contact.php" <?php if ($section == "contact") { echo "class='selected'"; } ?>>Contact</a></li>  
-			</ul>
-		 </nav>
-	</header>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+	<div id="progressbar"></div>
+     <script>
+				
+	$(function() {
+		$( "#progressbar" ).progressbar({
+			value: 37
+			});
+		});
+	</script>
+</body>
+</html>

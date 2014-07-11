@@ -9,7 +9,7 @@ include(ROOT_PATH . 'inc/header.php'); ?>
       <section>
 		<p>Please enter your details:<p>
 		<form action="loadinglevel.php" method="GET">
-		Enter your name: <input type="text" name="userName"><br>
+		Enter your name: <input type="text" autocomplete="off" name="userName"><br>
 		<input type="submit" value="Submit">
 		</form>
       </section>

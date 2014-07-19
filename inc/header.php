@@ -1,5 +1,5 @@
 <html>
-  <head>
+   <head>
     <meta charset="utf-8">
     <title>Spelling List</title>
     <link rel="stylesheet" href="css/normalize.css">
@@ -9,6 +9,10 @@
     <meta name="vimport" content="width-device-width, initial-scale-1.0">
  </head>
  <body>
+	<?php 
+	include('ChromePhp.php'); 
+	define("DEV_ENV","DEV");  
+	?>
 	<header>
 		<a href="index.php" id="logo">
 			<h1>Spelling List</h1>

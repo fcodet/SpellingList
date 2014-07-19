@@ -14,7 +14,13 @@ function letsStart() {
 		htmlString = htmlString + wordSpellingList[i];
 		htmlString = htmlString + "</div></td>";
 		htmlString = htmlString + "<td>";
-		htmlString = htmlString + '<audio id="'+wordSpellingList[i]+'AudioArea" controls > <source src=http://localhost/data/' + currentWordList[i] + '.mp3 type="audio/mpeg" ></audio>';
+		//htmlString = htmlString + '<audio id="'+wordSpellingList[i]+'AudioArea" controls > <source src=http://localhost/data/' + currentWordList[i] + '.mp3 type="audio/mpeg" ></audio>';
+		if (dev_env=="DEV") {
+			htmlString = htmlString + '<audio id="'+wordSpellingList[i]+'AudioArea" controls > <source src=http://localhost/data/' + currentWordList[i] + '.mp3 type="audio/mpeg" ><source src=http://localhost/data/' + currentWordList[i] + '.ogg type="audio/ogg" >Your browser does not support the audio element.</audio>';
+			}
+		else {
+			htmlString = htmlString + '<audio id="'+wordSpellingList[i]+'AudioArea" controls > <source src=http://www.spellinglist.co.uk/data/' + currentWordList[i] + '.mp3 type="audio/mpeg" ><source src=http://www.spellinglist.co.uk/data/' + currentWordList[i] + '.ogg type="audio/ogg" >Your browser does not support the audio element.</audio>';
+		}
 		//htmlString = htmlString + '<audio id="audioArea" controls > <source src=http://www.oxforddictionaries.com/media/english/uk_pron/w/wal/walk_/walk__gb_1.mp3 type="audio/mpeg" ></audio>';
 		//htmlString = htmlString + '<audio id="audioArea" controls > <source src=http://localhost/data/walk.mp3 type="audio/mpeg" ></audio>';
 		htmlString = htmlString + "</td>";
@@ -23,14 +29,27 @@ function letsStart() {
 		htmlString = htmlString + "</tr>";
 	}
 	$("#wordTableArea").append(htmlString);
-	htmlButton = '<button id="practiceButton" style="display:inline">Practice</button><br></br>';
-	$("#wordTableArea").before(htmlButton);
-	$("#practiceButton").click(practiceWords);
-	$("#practiceButton").after('<div style="display:inline;float:right;font-size:30px"> LEVEL '+currentLevel.toString()+'</div>');
+	htmlPracticeButton = '<button id="practiceButton" style="display:inline">Practice</button><br></br>';
+	htmlStartButton = '<span>                </span><button id="startButton" type="button" style="display:inline">No practice, let\'s play!</button><br></br>';
+	$("#wordTableArea").before(htmlPracticeButton);
+	if (listType != "COUPLE") {
+		$("#practiceButton").click(practiceSingleWords);
+	}
+	$("#practiceButton").after(htmlStartButton)
+	$("#practiceButton").after('<div id=levelText style="display:inline;float:right;font-size:30px">NEW WORDS IN LEVEL '+currentLevel.toString()+'</div>');
+	$("#startButton").click(function(){
+			newpage = "play.php?userName="+userName+"&currentWordIdx=0"
+			console.log(newpage);
+			window.location = newpage;
+		});
 
 }
 
-function practiceWords() {
+
+
+
+
+function practiceSingleWords() {
 	console.log("Practice");
 	//Disable the Practice Button
 	$("#practiceButton").attr("disabled","disabled");
@@ -50,7 +69,11 @@ function practiceWords() {
 			trTag="#"+wordSpellingList[i]+"Tr";
 			$(trTag).addClass("unlocked");
 		}
-		
+		//MAke input area responsive
+		//Change background color when mouse hovers over it
+		//Reset Background color to white when mouse is out of the area
+		//Process the request when "enter" key is pressed
+		//Play the pronunciation file if the input is in focus
 		inputTag = "#"+wordSpellingList[i]+"Input";
 		$(inputTag).mouseover( function () {$(this).css("backgroundColor","lightyellow");});
 		$(inputTag).mouseout( function () { $(this).css("backgroundColor","white");});
@@ -81,6 +104,10 @@ function practiceWords() {
 function PracticeOver (allGood){
 	if (allGood) {
 		console.log("Well practiced, shall we move on to the serious stuff?");
+		$("#practiceButton").text("Ready to Play!");
+		$("#practiceButton").css("font-weight","bold");
+		$("#practiceButton").css("color","darkgreen");
+		$("#practiceButton").removeAttr("disabled");
 	}
 	else {
 		console.log("Are you sure you don't want to finish practicing?");
@@ -163,8 +190,6 @@ function moveFocusToNextWord ($guessWordTag) {
 		$nextInputTag.focus();
 		guessWordNextAudioTagStr = "#"+$nextInputTag.attr("name")+"AudioArea"
 		console.log(guessWordNextAudioTagStr);
-		//$(guessWordNextAudioTag).attr("autoplay","autoplay");
-		//$(guessWordNextAudioTag).removeAttr("autoplay","autoplay");
 		$(guessWordNextAudioTagStr).get(0).play();
 	}
 	
